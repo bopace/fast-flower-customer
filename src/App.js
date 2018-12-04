@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
-import axios from 'axios'
 import FlowerShopScreenWrapper from './screens/FlowerShopScreenWrapper'
 
 // screens
-const flowerShopScreen = () => (
+const flowerShopScreen = shops => (
   <FlowerShopScreenWrapper />
 )
 
@@ -17,47 +16,30 @@ const myOrdersScreen = () => (
 )
 
 export default class App extends Component {
-  state = {
-    data: [],
-    id: 0,
-    message: null,
-    intervalIsSet: false,
-    idToDelete: null,
-    idToUpdate: null,
-    objectToUpdate: null,
-  }
-
-  componentDidMount() {
-    this.getDataFromDb()
-    if (!this.state.intervalIsSet) {
-      let interval = setInterval(this.getDataFromDb, 1000)
-      this.setState({ intervalIsSet: interval })
-    }
-  }
-
-  componentWillUnmount() {
-    if (this.state.intervalIsSet) {
-      clearInterval(this.state.intervalIsSet)
-      this.setState({ intervalIsSet: null })
-    }
-  }
-
   render() {
     return (
       <Router>
         <div>
-          <FlowerShopScreenWrapper />
-        </div>
+          <div>
+            <Link to='/shops'>Flower shops</Link>
+          </div>
+          <div>
+            <Link to='/place-order'>Place an order</Link>
+          </div>
+          <div>
+            <Link to='/my-orders'>My orders</Link>
+          </div>
 
-        <Route path='/shops' exact
-          component={flowerShopScreen}
-        />
-        <Route path='/place-order' exact
-          component={placeOrderScreen}
-        />
-        <Route path='/my-orders' exact
-          component={myOrdersScreen}
-        />
+          <Route path='/shops' exact
+            component={flowerShopScreen}
+          />
+          <Route path='/place-order' exact
+            component={placeOrderScreen}
+          />
+          <Route path='/my-orders' exact
+            component={myOrdersScreen}
+          />
+        </div>
       </Router>
     )
   }
@@ -123,54 +105,4 @@ export default class App extends Component {
       </div>
     )
   }
-
-  getDataFromDb = () => {
-    fetch('/api/getData')
-      .then(data => data.json())
-      .then(res => this.setState({ data: res.data }))
-  }
-
-  putDataToDB = message => {
-    let currentIds = this.state.data.map(data => data.id)
-    let idToBeAdded = 0
-    while (currentIds.includes(idToBeAdded)) {
-      idToBeAdded++
-    }
-
-    axios.post('/api/putData', {
-      id: idToBeAdded,
-      message: message
-    })
-  }
-
-  deleteFromDB = idToDelete => {
-    let objIdToDelete = null
-    this.state.data.forEach(dat => {
-      if (dat.id === idToDelete) {
-        objIdToDelete = dat._id
-      }
-    })
-
-    axios.delete('/api/deleteData', {
-      data: {
-        id: objIdToDelete
-      }
-    })
-  }
-
-  updateDB = (idToUpdate, updateToApply) => {
-    let objIdToUpdate = null
-    this.state.data.forEach(dat => {
-      if (dat.id === idToUpdate) {
-        objIdToUpdate = dat._id
-      }
-    })
-
-    axios.post('/api/updateData', {
-      id: objIdToUpdate,
-      update: { message: updateToApply }
-    })
-  }
 }
-
-export default App;

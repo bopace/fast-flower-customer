@@ -1,13 +1,28 @@
 import React from 'react'
-import { arrayOf } from 'prop-types'
+import { arrayOf, func } from 'prop-types'
 import FlowerShopSchema from '../schemas/FlowerShopSchema'
 
 export default class FlowerShopScreen extends React.PureComponent {
   static propTypes = {
-    flowerShops: arrayOf(FlowerShopSchema).isRequired
+    addShop: func.isRequired,
+    flowerShops: arrayOf(FlowerShopSchema).isRequired,
+  }
+
+  state = {
+    name: null,
+    url: null,
   }
 
   render() {
+    return (
+      <div>
+        {this.renderFlowerShops()}
+        {this.renderAddShopForm()}
+      </div>
+    )
+  }
+
+  renderFlowerShops() {
     const { flowerShops } = this.props
 
     if (flowerShops.length === 0) {
@@ -25,5 +40,36 @@ export default class FlowerShopScreen extends React.PureComponent {
         ))}
       </div>
     )
+  }
+
+  renderAddShopForm() {
+    return (
+      <div>
+        <input
+          type='text'
+          onChange={this.updateName}
+          placeholder='Shop name'
+        />
+        <input
+          type='text'
+          onChange={this.updateUrl}
+          placeholder='Shop event URL'
+        />
+        <button onClick={this.addShop}>
+          Add shop
+        </button>
+      </div>
+    )
+  }
+
+  updateName = e => this.setState({ name: e.target.value })
+  updateUrl = e => this.setState({ url: e.target.value })
+  addShop = () => {
+    const { name, url } = this.state
+    this.setState({
+      name: '',
+      url: '',
+    })
+    this.props.addShop(name, url)
   }
 }
