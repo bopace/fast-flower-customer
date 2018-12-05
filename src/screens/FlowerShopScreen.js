@@ -1,10 +1,12 @@
 import React from 'react'
 import { arrayOf, func } from 'prop-types'
 import FlowerShopSchema from '../schemas/FlowerShopSchema'
+import FlowerShop from '../components/FlowerShop'
 
 export default class FlowerShopScreen extends React.PureComponent {
   static propTypes = {
     addShop: func.isRequired,
+    deleteShop: func.isRequired,
     flowerShops: arrayOf(FlowerShopSchema).isRequired,
   }
 
@@ -23,7 +25,7 @@ export default class FlowerShopScreen extends React.PureComponent {
   }
 
   renderFlowerShops() {
-    const { flowerShops } = this.props
+    const { flowerShops, deleteShop } = this.props
 
     if (flowerShops.length === 0) {
       return (
@@ -34,9 +36,13 @@ export default class FlowerShopScreen extends React.PureComponent {
     return (
       <div>
         {flowerShops.map(shop => (
-          <div>
-            {shop.name}, {shop.url}
-          </div>
+          <FlowerShop
+            key={shop.id}
+            onDelete={deleteShop}
+            shopId={shop.id}
+            shopName={shop.name}
+            shopUrl={shop.url}
+          />
         ))}
       </div>
     )
@@ -49,11 +55,13 @@ export default class FlowerShopScreen extends React.PureComponent {
           type='text'
           onChange={this.updateName}
           placeholder='Shop name'
+          value={this.state.name}
         />
         <input
           type='text'
           onChange={this.updateUrl}
           placeholder='Shop event URL'
+          value={this.state.url}
         />
         <button onClick={this.addShop}>
           Add shop

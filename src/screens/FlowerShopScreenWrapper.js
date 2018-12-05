@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import FlowerShopScreen from './FlowerShopScreen'
+import { formatShopData } from '../utils'
 
 export default class FlowerShopScreenWrapper extends React.PureComponent {
   state = {
@@ -22,6 +23,7 @@ export default class FlowerShopScreenWrapper extends React.PureComponent {
       <div>
         <FlowerShopScreen
           addShop={this.addShopToDb}
+          deleteShop={this.deleteShopFromDB}
           flowerShops={flowerShops}
         />
       </div>
@@ -32,8 +34,8 @@ export default class FlowerShopScreenWrapper extends React.PureComponent {
     fetch('/api/getShops')
       .then(data => data.json())
       .then(res => {
-        console.log('the data: ', res.data)
-        this.setState({ flowerShops: res.data })
+        const formattedData = formatShopData(res.data)
+        this.setState({ flowerShops: formattedData })
       })
   }
 
@@ -44,17 +46,10 @@ export default class FlowerShopScreenWrapper extends React.PureComponent {
     }).then(() => this.getShopsFromDb())
   }
 
-  deleteShopFromDB = idToDelete => {
-    let shopIdToDelete = null
-    this.state.data.forEach(dat => {
-      if (dat.id === idToDelete) {
-        shopIdToDelete = dat._id
-      }
-    })
-
+  deleteShopFromDB = id => {
     axios.delete('/api/deleteShop', {
       data: {
-        id: shopIdToDelete
+        id: id
       }
     }).then(() => this.getShopsFromDb())
   }
