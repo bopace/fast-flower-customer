@@ -6,3 +6,5 @@ export const ORDER_STATE = {
   OUT_FOR_DELIVERY: 'ORDER_OUT_FOR_DELIVERY',
   DELIVERED: 'ORDER_DELIVERED',
 }
+
+export const USER_EVENTS_URL = 'http://localhost:3001/api/events'

@@ -1,4 +1,5 @@
 import { PropTypes } from 'react-schema'
+import UserInfoSchema from './UserInfoSchema'
 
 const { arrayOf, shape, string } = PropTypes
 
@@ -13,4 +14,5 @@ export default shape({
   shopId: string.isRequired,
   shopName: string.isRequired,
   shopUrl: string.isRequired,
+  userInfo: UserInfoSchema.isRequired,
 })

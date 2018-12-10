@@ -2,12 +2,14 @@ import React from 'react'
 import { arrayOf, func } from 'prop-types'
 import uuid from 'uuid/v4'
 import FlowerShopSchema from '../schemas/FlowerShopSchema'
-import { ORDER_STATE } from '../constants'
+import UserInfoSchema from '../schemas/UserInfoSchema'
+import { ORDER_STATE, USER_EVENTS_URL } from '../constants'
 
 export default class PlaceOrderScreen extends React.PureComponent {
   static propTypes = {
     flowerShops: arrayOf(FlowerShopSchema).isRequired,
     placeOrder: func.isRequired,
+    userInfo: UserInfoSchema.isRequired,
   }
 
   state = {
@@ -140,7 +142,7 @@ export default class PlaceOrderScreen extends React.PureComponent {
   }
 
   placeOrder = () => {
-    const { flowerShops } = this.props
+    const { flowerShops, userInfo } = this.props
     const { chosenFlowerShopId, items, specialInstructions } = this.state
     const chosenFlowerShop = flowerShops.find(shop => shop.id === chosenFlowerShopId)
     const myOrder = {
@@ -151,7 +153,11 @@ export default class PlaceOrderScreen extends React.PureComponent {
       shopId: chosenFlowerShop.id,
       shopName: chosenFlowerShop.name,
       shopUrl: chosenFlowerShop.url,
+      userInfo: userInfo,
+      userEventsUrl: USER_EVENTS_URL,
     }
+
+    console.log('my order', myOrder)
 
     this.props.placeOrder(myOrder)
   }

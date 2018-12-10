@@ -1,7 +1,7 @@
 import axios from 'axios'
 import uuid from 'uuid/v4'
 
-export default function updateOrder(userInfo, order, newState) {
+export default function updateOrder(order, newState) {
   const updatedOrder = {
     ...order,
     state: newState
@@ -12,16 +12,13 @@ export default function updateOrder(userInfo, order, newState) {
     domain: 'order',
     id: uuid(),
     attrs: {
-      customerName: userInfo.name,
-      customerCell: userInfo.cellNumber,
-      customerEventConsumer: userInfo.eventConsumer,
-      order: updatedOrder
+      order: updatedOrder,
     }
   }
 
-  // axios.post(order.shopUrl, {
-  //   event: updateOrderEvent
-  // })
+  axios.post(order.shopUrl, {
+    event: updateOrderEvent
+  })
 
   axios.post('/api/updateOrder', {
     id: order.id,

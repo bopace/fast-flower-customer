@@ -2,12 +2,10 @@ import React from 'react'
 import { arrayOf } from 'prop-types'
 import OrderSchema from '../schemas/OrderSchema'
 import Order from '../components/Order'
-import UserInfoSchema from '../schemas/UserInfoSchema'
 
 export default class MyOrdersScreen extends React.PureComponent {
   static propTypes = {
     orders: arrayOf(OrderSchema).isRequired,
-    userInfo: UserInfoSchema.isRequired,
   }
 
   render() {
@@ -19,7 +17,7 @@ export default class MyOrdersScreen extends React.PureComponent {
   }
 
   renderOrders() {
-    const { orders, userInfo } = this.props
+    const { orders } = this.props
 
     if (orders.length === 0) {
       return (
@@ -31,7 +29,7 @@ export default class MyOrdersScreen extends React.PureComponent {
       <div>
         <h1>Orders</h1>
         {orders.map(order => (
-          <Order order={order} userInfo={userInfo} />
+          <Order order={order} />
         ))}
       </div>
     )

@@ -2,12 +2,10 @@ import React from 'react'
 import { ORDER_STATE } from '../constants'
 import { updateOrder } from '../events'
 import OrderSchema from '../schemas/OrderSchema'
-import UserInfoSchema from '../schemas/UserInfoSchema'
 
 export default class OrderAction extends React.PureComponent {
   static propTypes = {
     order: OrderSchema.isRequired,
-    userInfo: UserInfoSchema.isRequired,
   }
 
   render() {
@@ -58,14 +56,14 @@ export default class OrderAction extends React.PureComponent {
   }
 
   cancelOrder = () => {
-    const { order, userInfo } = this.props
+    const { order } = this.props
 
-    updateOrder(userInfo, order, ORDER_STATE.CANCELLED)
+    updateOrder(order, ORDER_STATE.CANCELLED)
   }
 
   confirmDelivery = () => {
-    const { order, userInfo } = this.props
+    const { order } = this.props
 
-    updateOrder(userInfo, order, ORDER_STATE.DELIVERED)
+    updateOrder(order, ORDER_STATE.DELIVERED)
   }
 }
