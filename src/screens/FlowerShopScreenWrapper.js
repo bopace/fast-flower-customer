@@ -6,11 +6,6 @@ import { formatShopData } from '../utils'
 export default class FlowerShopScreenWrapper extends React.PureComponent {
   state = {
     flowerShops: [],
-    id: 0,
-    message: null,
-    idToDelete: null,
-    idToUpdate: null,
-    objectToUpdate: null,
   }
 
   componentDidMount() {
