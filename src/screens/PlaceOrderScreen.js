@@ -3,7 +3,7 @@ import { arrayOf, func } from 'prop-types'
 import uuid from 'uuid/v4'
 import FlowerShopSchema from '../schemas/FlowerShopSchema'
 import UserInfoSchema from '../schemas/UserInfoSchema'
-import { ORDER_STATE, USER_EVENTS_URL } from '../constants'
+import { ORDER_STATE } from '../constants'
 
 export default class PlaceOrderScreen extends React.PureComponent {
   static propTypes = {
@@ -154,7 +154,6 @@ export default class PlaceOrderScreen extends React.PureComponent {
       shopName: chosenFlowerShop.name,
       shopUrl: chosenFlowerShop.url,
       userInfo: userInfo,
-      userEventsUrl: USER_EVENTS_URL,
     }
 
     console.log('my order', myOrder)
