@@ -11,8 +11,8 @@ export default class FlowerShopScreen extends React.PureComponent {
   }
 
   state = {
-    name: null,
-    url: null,
+    name: '',
+    url: '',
   }
 
   render() {

@@ -25,7 +25,6 @@ export default class UserInfoScreenWrapper extends React.PureComponent {
     fetch('/api/getUserInfo')
       .then(data => data.json())
       .then(res => {
-        console.log('data', res.data)
         this.setState({ userInfo: res.data[0] })
       })
   }

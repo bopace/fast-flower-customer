@@ -12,6 +12,7 @@ export default class UserInfoScreen extends React.PureComponent {
     name: '',
     address: '',
     cellNumber: '',
+    eventConsumer: '',
   }
 
   render() {
@@ -43,6 +44,14 @@ export default class UserInfoScreen extends React.PureComponent {
             value={this.state.cellNumber}
           />
         </div>
+        <div>
+          <input
+            type='text'
+            onChange={this.updateEventConsumer}
+            placeholder={userInfo.eventConsumer}
+            value={this.state.eventConsumer}
+          />
+        </div>
         <button onClick={this.onUpdate}>
           Update info
         </button>
@@ -53,13 +62,15 @@ export default class UserInfoScreen extends React.PureComponent {
   updateName = e => this.setState({ name: e.target.value })
   updateAddress = e => this.setState({ address: e.target.value })
   updateCellNumber = e => this.setState({ cellNumber: e.target.value })
+  updateEventConsumer = e => this.setState({ eventConsumer: e.target.value })
 
   onUpdate = () => {
-    const { name, address, cellNumber } = this.state
+    const { name, address, cellNumber, eventConsumer } = this.state
     const update = {
       name: name,
       address: address,
       cellNumber: cellNumber,
+      eventConsumer: eventConsumer
     }
 
     this.props.updateUserInfo(update)

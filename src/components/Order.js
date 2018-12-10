@@ -1,21 +1,24 @@
 import React from 'react'
 // import { func, string } from 'prop-types'
 import OrderSchema from '../schemas/OrderSchema'
+import OrderAction from './OrderAction'
+import UserInfoSchema from '../schemas/UserInfoSchema'
 
 export default class Order extends React.PureComponent {
   static propTypes = {
     order: OrderSchema.isRequired,
+    userInfo: UserInfoSchema.isRequired,
   }
 
   render() {
-    const { order } = this.props
+    const { order, userInfo } = this.props
     return (
       <div>
         <h2>Order: {order.id}</h2>
         <div>Placed to: <strong>{order.shopName}</strong></div>
         <div>Items ordered:</div>
         {this.renderItems(order.items)}
-        <div>Status: <strong>{order.state}</strong></div>
+        <OrderAction order={order} userInfo={userInfo} />
       </div>
     )
   }
