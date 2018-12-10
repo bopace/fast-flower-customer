@@ -6,7 +6,6 @@ import { formatShopData } from '../utils'
 export default class PlaceOrderScreenWrapper extends React.PureComponent {
   state = {
     flowerShops: [],
-    orders: [],
   }
 
   componentDidMount() {
@@ -16,11 +15,10 @@ export default class PlaceOrderScreenWrapper extends React.PureComponent {
   render() {
     const { flowerShops } = this.state
     return (
-      <div>
-        <PlaceOrderScreen
-          flowerShops={flowerShops}
-        />
-      </div>
+      <PlaceOrderScreen
+        flowerShops={flowerShops}
+        placeOrder={this.placeOrder}
+      />
     )
   }
 
@@ -33,17 +31,9 @@ export default class PlaceOrderScreenWrapper extends React.PureComponent {
       })
   }
 
-  getOrdersFromDb = () => {
-    fetch('/api/getOrders')
-      .then(data => data.json())
-      .then(res => {
-        this.setState({ orders: res.data })
-      })
-  }
-
   placeOrder = order => {
     axios.post('/api/addOrder', {
       order: order
-    }).then(() => this.getOrdersFromDb())
+    })
   }
 }

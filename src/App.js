@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import FlowerShopScreenWrapper from './screens/FlowerShopScreenWrapper'
+import MyOrdersScreenWrapper from './screens/MyOrdersScreenWrapper'
 import PlaceOrderScreenWrapper from './screens/PlaceOrderScreenWrapper'
 
 // screens
@@ -13,7 +14,7 @@ const placeOrderScreen = () => (
 )
 
 const myOrdersScreen = () => (
-  <div>Coming soon!</div>
+  <MyOrdersScreenWrapper />
 )
 
 export default class App extends Component {

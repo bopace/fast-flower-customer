@@ -11,7 +11,7 @@ export default class PlaceOrderScreen extends React.PureComponent {
   }
 
   state = {
-    chosenFlowerShop: null,
+    chosenFlowerShopId: null,
     items: [],
     itemName: '',
     itemQuantity: '',
@@ -46,7 +46,8 @@ export default class PlaceOrderScreen extends React.PureComponent {
     return (
       <div>
         <h2>Shop</h2>
-        <select>
+        <select onChange={this.updateShopId}>
+          <option value="" selected disabled hidden>Select a shop</option>
           {flowerShops.map(this.renderFlowerShopDropdownItem)}
         </select>
       </div>
@@ -55,7 +56,7 @@ export default class PlaceOrderScreen extends React.PureComponent {
 
   renderFlowerShopDropdownItem(flowerShop) {
     return (
-      <option>
+      <option value={flowerShop.id}>
         {flowerShop.name}
       </option>
     )
@@ -120,6 +121,7 @@ export default class PlaceOrderScreen extends React.PureComponent {
     )
   }
 
+  updateShopId = e => this.setState({ chosenFlowerShopId: e.target.value })
   updateItemName = e => this.setState({ itemName: e.target.value })
   updateItemQuantity = e => this.setState({ itemQuantity: e.target.value })
   updateSpecialInstructions = e => this.setState({ specialInstructions: e.target.value })
@@ -138,7 +140,9 @@ export default class PlaceOrderScreen extends React.PureComponent {
   }
 
   placeOrder = () => {
-    const { chosenFlowerShop, items, specialInstructions } = this.state
+    const { flowerShops } = this.props
+    const { chosenFlowerShopId, items, specialInstructions } = this.state
+    const chosenFlowerShop = flowerShops.find(shop => shop.id === chosenFlowerShopId)
     const myOrder = {
       id: uuid(),
       state: ORDER_STATE.PLACED,
@@ -149,6 +153,6 @@ export default class PlaceOrderScreen extends React.PureComponent {
       shopUrl: chosenFlowerShop.url,
     }
 
-    this.props.placeOrder(myOrder, chosenFlowerShop)
+    this.props.placeOrder(myOrder)
   }
 }
