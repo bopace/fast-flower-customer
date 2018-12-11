@@ -1,9 +1,14 @@
 import React from 'react'
+import { object } from 'prop-types'
 import PlaceOrderScreen from './PlaceOrderScreen'
 import { formatShopData } from '../utils'
 import { createOrder } from '../events'
 
 export default class PlaceOrderScreenWrapper extends React.PureComponent {
+  static propTypes = {
+    history: object.isRequired,
+  }
+
   state = {
     flowerShops: [],
     userInfo: {},
@@ -42,5 +47,8 @@ export default class PlaceOrderScreenWrapper extends React.PureComponent {
       })
   }
 
-  placeOrder = order => createOrder(order)
+  placeOrder = order => {
+    createOrder(order)
+    this.props.history.push('/my-orders')
+  }
 }

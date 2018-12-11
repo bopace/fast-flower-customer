@@ -8,7 +8,7 @@ export default class MyOrdersScreenWrapper extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.getOrdersFromDb()
+    this.interval = setInterval(() => this.getOrdersFromDb(), 500)
     this.getUserInfoFromDb()
   }
 

@@ -156,8 +156,6 @@ export default class PlaceOrderScreen extends React.PureComponent {
       userInfo: userInfo,
     }
 
-    console.log('my order', myOrder)
-
     this.props.placeOrder(myOrder)
   }
 }

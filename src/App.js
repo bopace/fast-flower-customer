@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, withRouter } from 'react-router-dom'
 import FlowerShopScreenWrapper from './screens/FlowerShopScreenWrapper'
 import MyOrdersScreenWrapper from './screens/MyOrdersScreenWrapper'
 import PlaceOrderScreenWrapper from './screens/PlaceOrderScreenWrapper'
@@ -14,8 +14,10 @@ const flowerShopScreen = () => (
   <FlowerShopScreenWrapper />
 )
 
-const placeOrderScreen = () => (
-  <PlaceOrderScreenWrapper />
+const placeOrderScreen = withRouter(
+  ({ history }) => (
+    <PlaceOrderScreenWrapper history={history} />
+  )
 )
 
 const myOrdersScreen = () => (
@@ -47,7 +49,7 @@ export default class App extends Component {
             component={flowerShopScreen}
           />
           <Route path='/place-order' exact
-            component={placeOrderScreen}
+            component={withRouter(placeOrderScreen)}
           />
           <Route path='/my-orders' exact
             component={myOrdersScreen}
