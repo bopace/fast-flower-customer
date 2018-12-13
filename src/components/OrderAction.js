@@ -1,6 +1,6 @@
 import React from 'react'
 import { ORDER_STATE } from '../constants'
-import { updateOrder } from '../events'
+import { confirmDelivery, updateOrder } from '../events'
 import OrderSchema from '../schemas/OrderSchema'
 
 export default class OrderAction extends React.PureComponent {
@@ -47,10 +47,16 @@ export default class OrderAction extends React.PureComponent {
       return (
         <div>
           <div>Your flowers will be delivered shortly!</div>
-          <button onClick={this.confirmDelivery}>
+          <button onClick={this.onConfirmDelivery}>
             My flowers have been delivered!
           </button>
         </div>
+      )
+    }
+
+    if (status === ORDER_STATE.DELIVERED) {
+      return (
+        <div>Enjoy the flowers!</div>
       )
     }
   }
@@ -61,8 +67,10 @@ export default class OrderAction extends React.PureComponent {
     updateOrder(order, ORDER_STATE.CANCELLED)
   }
 
-  confirmDelivery = () => {
+  onConfirmDelivery = () => {
     const { order } = this.props
+
+    confirmDelivery(order)
 
     updateOrder(order, ORDER_STATE.DELIVERED)
   }
