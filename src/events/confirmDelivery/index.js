@@ -15,7 +15,7 @@ export default function confirmDelivery(order) {
     }
   }
 
-  return axios.post('/api/events', {
+  return axios.post(order.shopUrl, {
     event: confirmDeliveryEvent
   })
 }
